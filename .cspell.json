@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": true,
+  "ignorePaths": [
+    ".cspell.json",
+    ".devcontainer/",
+    ".github/",
+    ".vscode/"
+  ],
+  "words": [
+    "dotazure",
+    "dotenv",
+    "mstest",
+    "netstandard"
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.md",
+      "dictionaries": [
+        "csharp"
+      ]
+    }
+  ]
+}

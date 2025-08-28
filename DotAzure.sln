@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotAzure", "DotAzure\DotAzure.csproj", "{892A78C0-1FD3-408A-8E69-FE0C94BAB97A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotAzure.Test", "DotAzure.Test\DotAzure.Test.csproj", "{6CE7DCE3-B430-4ED0-8D0F-66B734E522B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotAzure.Example", "DotAzure.Example\DotAzure.Example.csproj", "{5B94F2F7-D70C-4FC7-86C3-AA40DB5E182B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{892A78C0-1FD3-408A-8E69-FE0C94BAB97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{892A78C0-1FD3-408A-8E69-FE0C94BAB97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{892A78C0-1FD3-408A-8E69-FE0C94BAB97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{892A78C0-1FD3-408A-8E69-FE0C94BAB97A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE7DCE3-B430-4ED0-8D0F-66B734E522B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE7DCE3-B430-4ED0-8D0F-66B734E522B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE7DCE3-B430-4ED0-8D0F-66B734E522B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE7DCE3-B430-4ED0-8D0F-66B734E522B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B94F2F7-D70C-4FC7-86C3-AA40DB5E182B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B94F2F7-D70C-4FC7-86C3-AA40DB5E182B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B94F2F7-D70C-4FC7-86C3-AA40DB5E182B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B94F2F7-D70C-4FC7-86C3-AA40DB5E182B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

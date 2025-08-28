@@ -1,0 +1,19 @@
+root = true
+
+[*]
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{*proj,props,xml}]
+indent_size = 2
+indent_style = space
+
+[*.{json,yaml,yml}]
+indent_size = 2
+indent_style = space
+
+[*.cs]
+# MSTEST0026: Avoid conditional access in assertions
+dotnet_diagnostic.MSTEST0026.severity = none

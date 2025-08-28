@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "ms-azuretools.azure-dev",
+    "ms-dotnettools.csdevkit",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
