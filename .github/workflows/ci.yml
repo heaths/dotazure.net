@@ -1,0 +1,58 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+    - main
+  workflow_call:
+    inputs:
+      release:
+        description: Whether this is running as part of a release workflow.
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - macos-latest
+        - ubuntu-latest
+        - windows-latest
+        dotnet-version: ["8.0.x"]
+        target: ["net8.0"]
+        include:
+          - os: windows-latest
+            dotnet-version: "8.0.x"
+            target: net48
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+        cache: true
+        cache-dependency-path: "**/packages.lock.json"
+    - name: Test
+      run: dotnet test --framework ${{ matrix.target }}
+
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Check spelling
+      uses: streetsidesoftware/cspell-action@v6
+      with:
+        config: .cspell.json

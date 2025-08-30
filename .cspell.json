@@ -6,7 +6,8 @@
     ".cspell.json",
     ".devcontainer/",
     ".github/",
-    ".vscode/"
+    ".vscode/",
+    "**/packages.lock.json"
   ],
   "words": [
     "dotazure",

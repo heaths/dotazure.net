@@ -1,7 +1,7 @@
 # Dotazure
 
-[![releases](https://img.shields.io/github/v/release/heaths/dotazure.svg?logo=github)](https://github.com/heaths/dotazure/releases/latest)
-[![ci](https://github.com/heaths/dotazure/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/heaths/dotazure/actions/workflows/ci.yml)
+[![releases](https://img.shields.io/github/v/release/heaths/dotazure.net.svg?logo=github)](https://github.com/heaths/dotazure.net/releases/latest)
+[![ci](https://github.com/heaths/dotazure.net/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/heaths/dotazure.net/actions/workflows/ci.yml)
 
 Locate and load environment variables defined when provisioning an [Azure Developer CLI] project.
 

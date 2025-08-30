@@ -1,5 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <Version>0.1.0</Version>
+    <Description>Load environment variables from Azure Developer CLI environment</Description>
+    <Authors>
+      Heath Stewart (https://github.com/heaths)
+    </Authors>
+  </PropertyGroup>
+  <PropertyGroup>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
