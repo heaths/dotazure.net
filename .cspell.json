@@ -6,6 +6,7 @@
     ".cspell.json",
     ".devcontainer/",
     ".github/",
+    ".gitignore",
     ".vscode/",
     "**/packages.lock.json"
   ],
