@@ -112,7 +112,7 @@ jobs:
       run: >
         find 'bin/${{ needs.test.outputs.ArtifactId }}'
         -name *.nupkg
-        -exec dotnet nuget push '${{ needs.release.outputs.version }}' {} --api-key "$NUGET_API_KEY" \;
+        -exec dotnet nuget push {} --api-key "$NUGET_API_KEY" \;
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish release
