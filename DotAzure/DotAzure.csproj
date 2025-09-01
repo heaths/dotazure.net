@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Description>Load environment variables from Azure Developer CLI environment</Description>
     <Authors>
       Heath Stewart (https://github.com/heaths)
     </Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
@@ -16,9 +18,12 @@
     <PackageReference Include="dotenv.net" Version="4.0.0" />
     <PackageReference Include="System.Text.Json" Version="9.0.8" />
   </ItemGroup>
-  <Target Name="WriteBuildGitHubOutput" AfterTargets="Build" >
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  <Target Name="WriteBuildGitHubOutput" AfterTargets="Build">
     <ItemGroup>
-      <_Variable Include="TargetName=$(TargetName)" Condition="'$(TargetFramework)' == 'net8.0'"/>
+      <_Variable Include="TargetName=$(TargetName)" Condition="'$(TargetFramework)' == 'net8.0'" />
     </ItemGroup>
     <WriteLinesToFile
       Condition="'$(GITHUB_OUTPUT)' != ''"
@@ -27,10 +32,10 @@
       Overwrite="false"
     />
   </Target>
-  <Target Name="WritePackGitHubOutput" AfterTargets="Pack" >
+  <Target Name="WritePackGitHubOutput" AfterTargets="Pack">
     <ItemGroup>
-      <_Variable Include="PackageId=$(PackageId)"/>
-      <_Variable Include="PackageVersion=$(PackageVersion)"/>
+      <_Variable Include="PackageId=$(PackageId)" />
+      <_Variable Include="PackageVersion=$(PackageVersion)" />
     </ItemGroup>
     <WriteLinesToFile
       Condition="'$(GITHUB_OUTPUT)' != ''"
