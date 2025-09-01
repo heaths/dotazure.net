@@ -85,11 +85,15 @@ jobs:
         VERSION='v${{ needs.test.outputs.PackageVersion }}'
         gh release create "$VERSION" --generate-notes
         echo "version=$VERSION" >> $GITHUB_OUTPUT
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Release package
       run: >
         find 'bin/${{ needs.test.outputs.ArtifactId }}'
         -name *.nupkg
         -exec gh release upload '${{ steps.draft.outputs.version }}' {} \;
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     runs-on: ubuntu-latest
@@ -111,3 +115,5 @@ jobs:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
     - name: Publish release
       run: gh release edit '${{ needs.release.outputs.version }}' --draft=false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
