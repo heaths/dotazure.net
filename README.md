@@ -7,16 +7,16 @@ Locate and load environment variables defined when provisioning an [Azure Develo
 
 ## Getting Started
 
-Add a package reference to [`DotAzure`](https://www.nuget.org/packages/DotAzure) for .NET SDK-style projects:
-
-```sh
-dotnet add package DotAzure
-```
-
 If you do not already have an [Azure Developer CLI] (azd) project, you can create one:
 
 ```sh
 azd init
+```
+
+Add a package reference to [`dotazure`](https://www.nuget.org/packages/DotAzure) to your project:
+
+```sh
+dotnet add package DotAzure
 ```
 
 After you define some resources e.g., an [Azure Key Vault](https://github.com/heaths/dotazure-rs/blob/main/infra/resources.bicep),
