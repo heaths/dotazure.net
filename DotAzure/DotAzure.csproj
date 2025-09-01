@@ -8,9 +8,35 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <IncludeSymbols>true</IncludeSymbols>
+    <!-- cspell:ignore snupkg -->
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="dotenv.net" Version="4.0.0" />
     <PackageReference Include="System.Text.Json" Version="9.0.8" />
   </ItemGroup>
+  <Target Name="WriteBuildGitHubOutput" AfterTargets="Build" >
+    <ItemGroup>
+      <_Variable Include="TargetName=$(TargetName)" Condition="'$(TargetFramework)' == 'net8.0'"/>
+    </ItemGroup>
+    <WriteLinesToFile
+      Condition="'$(GITHUB_OUTPUT)' != ''"
+      File="$(GITHUB_OUTPUT)"
+      Lines="@(_Variable)"
+      Overwrite="false"
+    />
+  </Target>
+  <Target Name="WritePackGitHubOutput" AfterTargets="Pack" >
+    <ItemGroup>
+      <_Variable Include="PackageId=$(PackageId)"/>
+      <_Variable Include="PackageVersion=$(PackageVersion)"/>
+    </ItemGroup>
+    <WriteLinesToFile
+      Condition="'$(GITHUB_OUTPUT)' != ''"
+      File="$(GITHUB_OUTPUT)"
+      Lines="@(_Variable)"
+      Overwrite="false"
+    />
+  </Target>
 </Project>

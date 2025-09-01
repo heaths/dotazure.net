@@ -1,0 +1,113 @@
+name: release
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+permissions:
+  attestations: write
+  contents: write
+  id-token: write
+
+env:
+  CONFIGURATION: Release
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+    with:
+      configuration: Release
+
+  verify:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Verify tag
+      if: github.event_name == 'push'
+      run: |
+        if [ '${{ github.ref_name }}' != 'v${{ needs.test.outputs.PackageVersion }}' ]; do
+          echo "::error title=Incorrect Tag::The tag ${{ github.ref_name }} does not match the package version ${{ needs.test.outputs.PackageVersion }}"
+          exit 1
+        fi
+
+  attest:
+    runs-on: ubuntu-latest
+    needs:
+    - test
+    - verify
+    steps:
+    - name: Download package
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ needs.test.outputs.ArtifactId }}
+        path: bin/${{ needs.test.outputs.ArtifactId }}
+    - name: Attest package
+      uses: actions/attest-build-provenance@v2
+      with:
+        subject-path: bin/${{ needs.test.outputs.ArtifactId }}
+    - name: Extract assemblies
+      run: find 'bin/${{ needs.test.outputs.ArtifactId }}' -name *.nupkg -exec unzip -o {} -d "bin/${CONFIGURATION}" \;
+    - name: Attest assemblies
+      uses: actions/attest-build-provenance@v2
+      with:
+        subject-path: |
+          bin/${{ env.CONFIGURATION }}/**/${{ needs.test.outputs.TargetName }}.dll
+          bin/${{ env.CONFIGURATION }}/**/${{ needs.test.outputs.TargetName }}.pdb
+
+  release:
+    runs-on: ubuntu-latest
+    needs:
+    - test
+    - attest
+    outputs:
+      version: ${{ steps.draft.outputs.version }}
+    steps:
+    # Check out with full history to generate release notes.
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Download package
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ needs.test.outputs.ArtifactId }}
+        path: bin/${{ needs.test.outputs.ArtifactId }}
+    - name: Draft release
+      id: draft
+      run: |
+        VERSION='v${{ needs.test.outputs.PackageVersion }}'
+        gh release create "$VERSION" --generate-notes
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+    - name: Release package
+      run: >
+        find 'bin/${{ needs.test.outputs.ArtifactId }}'
+        -name *.nupkg
+        -exec gh release upload '${{ steps.draft.outputs.version }}' {} \;
+
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+    - test
+    - release
+    steps:
+    - name: Download package
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ needs.test.outputs.ArtifactId }}
+        path: bin/${{ needs.test.outputs.ArtifactId }}
+    - name: Publish package
+      run: >
+        find 'bin/${{ needs.test.outputs.ArtifactId }}'
+        -name *.nupkg
+        -exec dotnet nuget push '${{ needs.release.outputs.version }}' {} --api-key "$NUGET_API_KEY" \;
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+    - name: Publish release
+      run: gh release edit '${{ needs.release.outputs.version }}' --draft=false
