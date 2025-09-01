@@ -12,6 +12,7 @@ namespace DotAzure;
 internal static class Helpers
 {
     public static Stream ToStream(this ReadOnlySpan<byte> buffer) => new MemoryStream(buffer.ToArray());
+    public static string NormalizePath(this string path) => path.Replace(@"\", "/");
 }
 
 internal class PathComparer : IEqualityComparer<string>
@@ -24,5 +25,5 @@ internal class PathComparer : IEqualityComparer<string>
     public int GetHashCode(string obj) =>
         Replace(obj)!.GetHashCode();
 
-    private static string? Replace(string? s) => s?.Replace(@"\", "/");
+    private static string? Replace(string? s) => s?.NormalizePath();
 }

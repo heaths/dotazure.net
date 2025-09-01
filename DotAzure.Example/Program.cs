@@ -15,7 +15,7 @@ if (Loader.Load())
 
 var endpoint = new Uri(Environment.GetEnvironmentVariable(EnvironmentVariableName) ??
     throw new Exception($"{EnvironmentVariableName} not set"), UriKind.Absolute);
-var credential = new DefaultAzureCredential();
+var credential = new AzureDeveloperCliCredential();
 var client = new SecretClient(endpoint, credential);
 
 KeyVaultSecret secret = await client.GetSecretAsync("my-secret");
