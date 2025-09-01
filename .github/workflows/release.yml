@@ -32,7 +32,7 @@ jobs:
     - name: Verify tag
       if: github.event_name == 'push'
       run: |
-        if [ '${{ github.ref_name }}' != 'v${{ needs.test.outputs.PackageVersion }}' ]; do
+        if [ '${{ github.ref_name }}' != 'v${{ needs.test.outputs.PackageVersion }}' ]; then
           echo "::error title=Incorrect Tag::The tag ${{ github.ref_name }} does not match the package version ${{ needs.test.outputs.PackageVersion }}"
           exit 1
         fi
