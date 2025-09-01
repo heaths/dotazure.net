@@ -6,13 +6,14 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{*proj,props,xml}]
+[*.{*proj,props}]
 indent_size = 2
-indent_style = space
 
 [*.{json,yaml,yml}]
 indent_size = 2
-indent_style = space
+
+[*.{config,xml}]
+indent_size = 2
 
 [*.cs]
 # MSTEST0026: Avoid conditional access in assertions
