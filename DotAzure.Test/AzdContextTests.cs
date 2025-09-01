@@ -122,7 +122,7 @@ public sealed class AzdContextBuildsTests
         Assert.AreEqual("~/src/azure.yaml", sut.ProjectPath.NormalizePath());
         Assert.AreEqual("~/src/.azure", sut.EnvironmentDirectory.NormalizePath());
         Assert.AreEqual("test", sut.EnvironmentName);
-        Assert.AreEqual("~/src/.azure/test", sut.EnvironmentRoot);
-        Assert.AreEqual("~/src/.azure/test/.env", sut.EnvironmentFile);
+        Assert.AreEqual("~/src/.azure/test", sut.EnvironmentRoot.NormalizePath());
+        Assert.AreEqual("~/src/.azure/test/.env", sut.EnvironmentFile.NormalizePath());
     }
 }
