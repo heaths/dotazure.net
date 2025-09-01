@@ -102,4 +102,27 @@ public sealed class AzdContextBuildsTests
 
         Assert.ThrowsException<FileNotFoundException>(() => new AzdContextBuilder(fileSystem.Object).Build());
     }
+
+    [TestMethod]
+    public void TestAzdContext()
+    {
+        var fileSystem = new Mock<IFileSystem>();
+        fileSystem.SetupGet(x => x.CurrentDirectory).Returns("~/src/project");
+        fileSystem.Setup(x => x.FileExists(It.Is("~/src/project/azure.yaml", PathComparer.Default))).Returns(false);
+        fileSystem.Setup(x => x.GetDirectoryParent("~/src/project")).Returns("~/src");
+        fileSystem.Setup(x => x.FileExists(It.Is("~/src/azure.yaml", PathComparer.Default))).Returns(true);
+        fileSystem.Setup(x => x.FileExists(It.Is("~/src/.azure/config.json", PathComparer.Default))).Returns(true);
+        fileSystem
+            .Setup(x => x.OpenFile(It.Is("~/src/.azure/config.json", PathComparer.Default), FileMode.Open))
+            .Returns(() => """{"defaultEnvironment":"test"}"""u8.ToStream());
+
+        var sut = new AzdContextBuilder(fileSystem.Object).Build();
+        Assert.IsNotNull(sut);
+        Assert.AreEqual("~/src", sut.ProjectDirectory.NormalizePath());
+        Assert.AreEqual("~/src/azure.yaml", sut.ProjectPath.NormalizePath());
+        Assert.AreEqual("~/src/.azure", sut.EnvironmentDirectory.NormalizePath());
+        Assert.AreEqual("test", sut.EnvironmentName);
+        Assert.AreEqual("~/src/.azure/test", sut.EnvironmentRoot);
+        Assert.AreEqual("~/src/.azure/test/.env", sut.EnvironmentFile);
+    }
 }
